@@ -1,7 +1,8 @@
 import "./App.css";
+import Dialogues from "./components/Dialogues";
 
 function App() {
-    return <h1 className="text-center">Hello world!</h1>;
+    return <Dialogues />;
 }
 
 export default App;
