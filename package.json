@@ -18,9 +18,17 @@
         "format:check": "bunx --bun prettier --check \"**/*.{js,ts,tsx,css,scss,json,yml,yaml,html}\""
     },
     "dependencies": {
+        "@radix-ui/react-slot": "^1.2.4",
         "@tailwindcss/vite": "^4.2.4",
+        "@types/debug": "^4.1.13",
+        "class-variance-authority": "^0.7.1",
+        "debug": "^4.4.3",
+        "immer": "^11.1.4",
+        "lucide-react": "^1.14.0",
+        "peaks.js": "^4.0.0",
         "react": "^19.2.5",
         "react-dom": "^19.2.5",
+        "tailwind-merge": "^3.5.0",
         "tailwindcss": "^4.2.4"
     },
     "devDependencies": {
