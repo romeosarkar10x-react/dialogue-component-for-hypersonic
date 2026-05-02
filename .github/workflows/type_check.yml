@@ -1,0 +1,21 @@
+name: Check formatting
+
+on:
+    workflow_call:
+
+jobs:
+    format_check:
+        runs-on: [ubuntu-latest]
+        name: Check formatting
+        steps:
+            - uses: actions/checkout@v6
+              name: Checkout repository
+
+            - uses: oven-sh/setup-bun@v2
+              name: Setup bun
+
+            - run: bun install
+              name: Install dependencies
+
+            - run: bun run type-check
+              name: Type check

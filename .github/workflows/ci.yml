@@ -1,0 +1,29 @@
+on:
+    push:
+        branches: [main]
+
+    pull_request:
+        branches: [main]
+
+jobs:
+    format_check:
+        uses: ./.github/workflows/format_check.yml
+
+    type_check:
+        uses: ./.github/workflows/type_check.yml
+        needs: format_check
+
+    lint:
+        uses: ./.github/workflows/lint.yml
+        needs: type_check
+
+    build_and_upload_artifact:
+        uses: ./.github/workflows/build_and_upload_artifact.yml
+        needs: lint
+
+    deploy_to_github_pages:
+        uses: ./.github/workflows/deploy_to_github_pages.yml
+        needs: build_and_upload_artifact
+        permissions:
+            pages: write
+            id-token: write
