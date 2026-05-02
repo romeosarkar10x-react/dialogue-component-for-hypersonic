@@ -11,7 +11,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "type-check": "tsc",
+        "type-check": "tsc -p tsconfig.app.json && tsc -p tsconfig.node.json",
         "lint": "bunx --bun eslint .",
         "preview": "vite preview",
         "format": "bunx --bun prettier --write \"**/*.{js,ts,tsx,css,scss,json,yml,yaml,html}\"",
