@@ -8,6 +8,8 @@ import MiniAudioPlayer, { type AudioPlayerAdapterResourceStateType } from "./Min
 import { produce } from "immer";
 import { PeaksAudioPlayerAdapter } from "@/utils/audio/PeaksAudioPlayerAdapter";
 import type { DialogueType } from "@/DialogueType";
+import { LuRedoDot, LuUndoDot } from "react-icons/lu";
+import { RxDividerVertical } from "react-icons/rx";
 
 const VARIANT_OPTIONS = [1, 2, 3, 4];
 
@@ -262,9 +264,11 @@ export default function Dialogue({
                                     disabled={!history.canUndo}
                                     title="Undo"
                                 >
-                                    <Icons.Undo />
+                                    {/*<Icons.Undo />*/}
+                                    <LuUndoDot size="20px" />
                                 </Btn>
-                                {history.undoDepth > 0 && <Badge count={history.undoDepth} />}
+                                {/*{history.undoDepth > 0 && <Badge count={history.undoDepth} />}*/}
+                                <RxDividerVertical />
                                 <Btn
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -273,9 +277,10 @@ export default function Dialogue({
                                     disabled={!history.canRedo}
                                     title="Redo"
                                 >
-                                    <Icons.Redo />
+                                    {/*<Icons.Redo />*/}
+                                    <LuRedoDot size="20px" />
                                 </Btn>
-                                {history.redoDepth > 0 && <Badge count={history.redoDepth} />}
+                                {/*{history.redoDepth > 0 && <Badge count={history.redoDepth} />} */}
                             </>
                         )}
                         {isExpanded && (
