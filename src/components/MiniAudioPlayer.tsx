@@ -57,6 +57,7 @@ export default function MiniAudioPlayer({
     }
 
     if (audioPlayerResourceState.status === "error") {
+        console.error(audioPlayerResourceState.error);
         return "Error...";
     }
 
