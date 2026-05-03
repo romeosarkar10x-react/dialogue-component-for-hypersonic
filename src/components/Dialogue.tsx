@@ -172,7 +172,12 @@ export default function Dialogue({
                 return;
             }
 
-            if (contentType !== "audio/mpeg" && contentType !== "audio/wav" && contentType !== "application/ogg") {
+            if (
+                contentType !== "audio/mpeg" &&
+                contentType !== "audio/mp3" &&
+                contentType !== "audio/wav" &&
+                contentType !== "application/ogg"
+            ) {
                 setGenerations((value) =>
                     produce(value, (draft) => {
                         draft[index] = { status: "error", error: new Error(`'Content-Type': ${contentType}`) };
