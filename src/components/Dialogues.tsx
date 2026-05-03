@@ -6,7 +6,7 @@ export default function Dialogues() {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-neutral-100">
+        <div className="min-h-screen bg-background text-foreground">
             <div className="max-w-3xl mx-auto py-12">
                 {DIALOGUES.map((d, i) => (
                     <Dialogue

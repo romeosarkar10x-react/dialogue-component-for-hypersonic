@@ -84,13 +84,17 @@ function AudioWaveform({ audioPlayerAdapter }: { audioPlayerAdapter: PeaksAudioP
                 return;
             }
 
+            const style = getComputedStyle(document.documentElement);
+            const accentColor = style.getPropertyValue("--accent").trim();
+            const primaryColor = style.getPropertyValue("--primary").trim();
+
             const options: PeaksOptions = {
                 axisTopMarkerHeight: 0,
                 axisBottomMarkerHeight: 0,
 
                 overview: {
-                    waveformColor: "rgba(201, 223, 138, 1)", // #c9df8a with full opacity
-                    playedWaveformColor: "rgba(119, 171, 89, 1)", // #77ab59 with full opacity
+                    waveformColor: accentColor || "oklch(0.9869 0.0214 95.2774)",
+                    playedWaveformColor: primaryColor || "oklch(0.7686 0.1647 70.0804)",
                     playheadWidth: 0,
                     container: overviewContainerRef.current,
                     showAxisLabels: false,

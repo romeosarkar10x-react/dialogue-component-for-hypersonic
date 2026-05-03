@@ -228,9 +228,9 @@ export default function Dialogue({
                 if (!isExpanded) onToggle();
             }}
             className={[
-                "transition-all duration-200 border-b border-neutral-800/40",
-                !isExpanded && "cursor-pointer hover:bg-neutral-800/20",
-                isExpanded && "bg-neutral-900/30",
+                "transition-all duration-200 border-b border-border/40",
+                !isExpanded && "cursor-pointer hover:bg-muted/20",
+                isExpanded && "bg-secondary/30",
             ]
                 .filter(Boolean)
                 .join(" ")}
@@ -240,16 +240,16 @@ export default function Dialogue({
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                         {genCount !== 0 && (
-                            <span className="text-amber-400">
+                            <span className="text-primary">
                                 <Icons.Loader />
                             </span>
                         )}
-                        <span className="text-[11px] font-bold tracking-[0.14em] text-amber-400/90 uppercase">
+                        <span className="text-[11px] font-bold tracking-[0.14em] text-primary/90 uppercase">
                             {dialogue.character}
                         </span>
-                        <span className="text-[11px] text-neutral-600">{dialogue.gender}</span>
-                        <span className="text-neutral-800">·</span>
-                        <span className="text-[11px] text-neutral-600">{dialogue.voice}</span>
+                        <span className="text-[11px] text-muted-foreground">{dialogue.gender}</span>
+                        <span className="text-border">·</span>
+                        <span className="text-[11px] text-muted-foreground">{dialogue.voice}</span>
                     </div>
 
                     {/* Undo/Redo in header — always visible when there's history, even when collapsed */}
@@ -289,7 +289,7 @@ export default function Dialogue({
                                     e.stopPropagation();
                                     if (!isEditing) onToggle();
                                 }}
-                                className="ml-1 h-7 w-7 inline-flex items-center justify-center rounded text-neutral-600 hover:text-neutral-300 hover:bg-neutral-800 transition-colors"
+                                className="ml-1 h-7 w-7 inline-flex items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                                 title="Collapse"
                             >
                                 <Icons.X />
@@ -307,10 +307,12 @@ export default function Dialogue({
                             onChange={handleInput}
                             onKeyDown={handleTextareaKeyDown}
                             rows={3}
-                            className="w-full text-sm text-neutral-200 leading-relaxed bg-neutral-950/60 border border-neutral-700 rounded-lg px-4 py-3 resize-none outline-none focus:border-amber-400/50 focus:ring-1 focus:ring-amber-400/10 transition-colors"
+                            className="w-full text-sm text-foreground leading-relaxed bg-background/60 border border-border rounded-lg px-4 py-3 resize-none outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/10 transition-colors"
                         />
                         <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-neutral-700 font-mono">enter → save · esc → cancel</span>
+                            <span className="text-[10px] text-muted-foreground/70 font-mono">
+                                enter → save · esc → cancel
+                            </span>
                             <div className="flex items-center gap-2">
                                 <Btn onClick={handleCancel} variant="label">
                                     <Icons.X /> Cancel
@@ -322,13 +324,13 @@ export default function Dialogue({
                         </div>
                     </div>
                 ) : (
-                    <p className="text-sm text-neutral-300 leading-relaxed select-text">{history.value}</p>
+                    <p className="text-sm text-foreground/90 leading-relaxed select-text">{history.value}</p>
                 )}
             </div>
 
             {/* ── TOOLBAR — only when expanded & not editing ── */}
             {isExpanded && !isEditing && (
-                <div className="flex items-center gap-1 px-5 py-2 mt-1 border-t border-neutral-800/30">
+                <div className="flex items-center gap-1 px-5 py-2 mt-1 border-t border-border/30">
                     <Btn onClick={startEditing} variant="label" title="Edit">
                         <Icons.Edit /> Edit
                     </Btn>
@@ -338,8 +340,8 @@ export default function Dialogue({
 
                     <Divider />
 
-                    <span className="text-[10px] text-neutral-600 mr-1 select-none">Variants</span>
-                    <div className="flex gap-px border border-neutral-800 rounded p-px">
+                    <span className="text-[10px] text-muted-foreground mr-1 select-none">Variants</span>
+                    <div className="flex gap-px border border-border rounded p-px">
                         {VARIANT_OPTIONS.map((opt) => (
                             <button
                                 key={opt}
@@ -347,8 +349,8 @@ export default function Dialogue({
                                 className={[
                                     "h-6 w-6 rounded text-[10px] font-medium transition-all duration-100",
                                     numVariants === opt
-                                        ? "bg-amber-400 text-neutral-950 font-bold"
-                                        : "text-neutral-600 hover:text-neutral-300 hover:bg-neutral-800",
+                                        ? "bg-primary text-primary-foreground font-bold"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted",
                                 ].join(" ")}
                             >
                                 {opt}
@@ -366,18 +368,18 @@ export default function Dialogue({
                                 <Icons.MoreVert />
                             </Btn>
                             {dropdownOpen && (
-                                <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-neutral-900 border border-neutral-800 rounded-lg shadow-xl shadow-black/50 py-1 z-50">
+                                <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-card border border-border rounded-lg shadow-xl shadow-black/50 py-1 z-50">
                                     <button
                                         disabled={isFirst}
                                         onClick={() => setDropdownOpen(false)}
-                                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"
                                     >
                                         <Icons.ArrowUp /> Move Up
                                     </button>
                                     <button
                                         disabled={isLast}
                                         onClick={() => setDropdownOpen(false)}
-                                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                                        className="flex items-center gap-2.5 w-full px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors disabled:opacity-30 disabled:pointer-events-none"
                                     >
                                         <Icons.ArrowDown /> Move Down
                                     </button>
@@ -390,7 +392,7 @@ export default function Dialogue({
 
             {/* ── GENERATIONS ── */}
             {generations.length > 0 && isExpanded && (
-                <div className="px-6 py-3 border-t border-neutral-800/30">
+                <div className="px-6 py-3 border-t border-border/30">
                     <ul className="flex flex-wrap gap-2">
                         {generations.map((generation, index) => (
                             <Generation key={index} {...{ generation, index }} />
