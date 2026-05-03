@@ -1,7 +1,7 @@
 import { useHistory } from "@/hooks/useHistory";
 import { Icons } from "@/icons";
 import { useEffect, useReducer, useRef, useState, type ChangeEvent } from "react";
-import Btn from "./Btn";
+import { Button } from "./ui/button";
 import Badge from "./Badge";
 import Divider from "./Divider";
 import MiniAudioPlayer, { type AudioPlayerAdapterResourceStateType } from "./MiniAudioPlayer";
@@ -256,30 +256,34 @@ export default function Dialogue({
                     <div className="flex items-center gap-1">
                         {(history.canUndo || history.canRedo) && (
                             <>
-                                <Btn
+                                <Button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         history.undo();
                                     }}
                                     disabled={!history.canUndo}
+                                    variant="ghost"
+                                    size="icon-sm"
                                     title="Undo"
                                 >
                                     {/*<Icons.Undo />*/}
                                     <LuUndoDot size="20px" />
-                                </Btn>
+                                </Button>
                                 {/*{history.undoDepth > 0 && <Badge count={history.undoDepth} />}*/}
                                 <RxDividerVertical />
-                                <Btn
+                                <Button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         history.redo();
                                     }}
                                     disabled={!history.canRedo}
+                                    variant="ghost"
+                                    size="icon-sm"
                                     title="Redo"
                                 >
                                     {/*<Icons.Redo />*/}
                                     <LuRedoDot size="20px" />
-                                </Btn>
+                                </Button>
                                 {/*{history.redoDepth > 0 && <Badge count={history.redoDepth} />} */}
                             </>
                         )}
@@ -314,12 +318,12 @@ export default function Dialogue({
                                 enter → save · esc → cancel
                             </span>
                             <div className="flex items-center gap-2">
-                                <Btn onClick={handleCancel} variant="label">
+                                <Button onClick={handleCancel} variant="ghost" size="sm">
                                     <Icons.X /> Cancel
-                                </Btn>
-                                <Btn onClick={handleSave} variant="primary">
+                                </Button>
+                                <Button onClick={handleSave} size="sm">
                                     <Icons.Check /> Save
-                                </Btn>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -331,12 +335,12 @@ export default function Dialogue({
             {/* ── TOOLBAR — only when expanded & not editing ── */}
             {isExpanded && !isEditing && (
                 <div className="flex items-center gap-1 px-5 py-2 mt-1 border-t border-border/30">
-                    <Btn onClick={startEditing} variant="label" title="Edit">
+                    <Button onClick={startEditing} variant="ghost" size="sm" title="Edit">
                         <Icons.Edit /> Edit
-                    </Btn>
-                    <Btn onClick={handleEnhance} disabled={enhancing} variant="label" title="Enhance with AI">
+                    </Button>
+                    <Button onClick={handleEnhance} disabled={enhancing} variant="ghost" size="sm" title="Enhance with AI">
                         {enhancing ? <Icons.Loader /> : <Icons.Sparkles />} Enhance
-                    </Btn>
+                    </Button>
 
                     <Divider />
 
@@ -359,14 +363,14 @@ export default function Dialogue({
                     </div>
 
                     <div className="ml-auto flex items-center gap-1">
-                        <Btn onClick={generate} variant="primary" title="Generate speech">
+                        <Button onClick={generate} size="sm" title="Generate speech">
                             <Icons.Play /> Generate
-                        </Btn>
+                        </Button>
 
                         <div className="relative" ref={dropdownRef}>
-                            <Btn onClick={() => setDropdownOpen((v) => !v)} title="More">
+                            <Button onClick={() => setDropdownOpen((v) => !v)} variant="ghost" size="icon-sm" title="More">
                                 <Icons.MoreVert />
-                            </Btn>
+                            </Button>
                             {dropdownOpen && (
                                 <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-card border border-border rounded-xl shadow-xl shadow-black/50 py-1 z-50">
                                     <button
