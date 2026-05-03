@@ -6,7 +6,7 @@ import { PeaksAudioPlayerAdapter } from "@/utils/audio/PeaksAudioPlayerAdapter";
 import { Download, ExternalLink, Pause, Play } from "lucide-react";
 import Peaks from "peaks.js";
 import type { PeaksInstance, PeaksOptions } from "peaks.js";
-import { useState, useRef, useEffect, useCallback, useId } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { pcmFloat32ToWAV } from "@/utils/audio/pcmFloat32ToWAV";
 
