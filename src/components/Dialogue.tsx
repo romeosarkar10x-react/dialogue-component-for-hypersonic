@@ -341,13 +341,13 @@ export default function Dialogue({
                     <Divider />
 
                     <span className="text-[10px] text-muted-foreground mr-1 select-none">Variants</span>
-                    <div className="flex gap-px border border-border rounded p-px">
+                    <div className="flex gap-px border border-border rounded-lg p-px">
                         {VARIANT_OPTIONS.map((opt) => (
                             <button
                                 key={opt}
                                 onClick={() => setNumVariants(opt)}
                                 className={[
-                                    "h-6 w-6 rounded text-[10px] font-medium transition-all duration-100",
+                                    "h-6 w-6 rounded-md text-[10px] font-medium transition-all duration-100",
                                     numVariants === opt
                                         ? "bg-primary text-primary-foreground font-bold"
                                         : "text-muted-foreground hover:text-foreground hover:bg-muted",
@@ -368,7 +368,7 @@ export default function Dialogue({
                                 <Icons.MoreVert />
                             </Btn>
                             {dropdownOpen && (
-                                <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-card border border-border rounded-lg shadow-xl shadow-black/50 py-1 z-50">
+                                <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-card border border-border rounded-xl shadow-xl shadow-black/50 py-1 z-50">
                                     <button
                                         disabled={isFirst}
                                         onClick={() => setDropdownOpen(false)}

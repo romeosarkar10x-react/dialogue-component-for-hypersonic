@@ -61,7 +61,7 @@ export default function MiniAudioPlayer({
     }
 
     return (
-        <div className="flex items-center gap-4 border-border border rounded-md px-4">
+        <div className="flex items-center gap-4 border-border border rounded-lg px-4">
             <Button variant="wrapper" size="wrapper" onClick={togglePlayPause}>
                 {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
             </Button>
