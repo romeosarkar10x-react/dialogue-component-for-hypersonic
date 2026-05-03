@@ -129,7 +129,7 @@ export default function Dialogue({
                 }),
             );
 
-            const url = `./music/Warriyo_Laura_Brehm_Mortals_(feat_Laura_Brehm)_[NCS_Release].mp3`;
+            const url = `./music/Giyu's_Demon_Slayer_Mark_[Giyu_vs_Akaza]_Theme_Demon_Slayer_Infinity_Castle_OST_Epic_Version.mp3`;
             let response: Response;
 
             try {
