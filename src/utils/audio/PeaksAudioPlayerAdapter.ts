@@ -5,6 +5,7 @@ import { getGlobalAudioContext } from "@/lib/globalAudioContext";
 
 export class PeaksAudioPlayerAdapter implements PlayerAdapter {
     private htmlAudioElem: HTMLAudioElement;
+    private abortController: AbortController = new AbortController();
     private audioBuffer: AudioBuffer;
     private static logger: Debugger = (() => {
         const logger = debug("{PeaksAudioPlayerAdapter}");
@@ -31,51 +32,91 @@ export class PeaksAudioPlayerAdapter implements PlayerAdapter {
     }
 
     async init(eventEmitter: EventEmitterForPlayerEvents): Promise<void> {
-        PeaksAudioPlayerAdapter.logger("init() called");
+        PeaksAudioPlayerAdapter.logger("init");
+        const signal = this.abortController.signal;
 
         const loaded = new Promise<void>((resolve, reject) => {
-            this.htmlAudioElem.addEventListener("loadeddata", () => resolve());
-            this.htmlAudioElem.addEventListener("error", () => reject());
+            if (this.htmlAudioElem.error) {
+                return reject(this.htmlAudioElem.error);
+            }
+
+            if (this.htmlAudioElem.readyState >= 2) {
+                return resolve();
+            }
+
+            this.htmlAudioElem.addEventListener("loadeddata", () => resolve(), { signal });
+            this.htmlAudioElem.addEventListener("error", () => reject(), { signal });
         });
 
-        this.htmlAudioElem.addEventListener("ended", () => {
-            PeaksAudioPlayerAdapter.logger("ended event");
-            eventEmitter.emit("player.ended");
-        });
+        this.htmlAudioElem.addEventListener(
+            "ended",
+            () => {
+                PeaksAudioPlayerAdapter.logger("ended event");
+                eventEmitter.emit("player.ended");
+            },
+            { signal },
+        );
 
-        this.htmlAudioElem.addEventListener("error", () => {
-            PeaksAudioPlayerAdapter.logger("error event", this.htmlAudioElem.error);
-            eventEmitter.emit("player.error", this.htmlAudioElem.error);
-        });
+        this.htmlAudioElem.addEventListener(
+            "error",
+            () => {
+                PeaksAudioPlayerAdapter.logger("error event", this.htmlAudioElem.error);
+                eventEmitter.emit("player.error", this.htmlAudioElem.error);
+            },
+            { signal },
+        );
 
-        this.htmlAudioElem.addEventListener("pause", () => {
-            PeaksAudioPlayerAdapter.logger("pause event, currentTime:", this.htmlAudioElem.currentTime);
-            eventEmitter.emit("player.pause", this.htmlAudioElem.currentTime);
-        });
+        this.htmlAudioElem.addEventListener(
+            "pause",
+            () => {
+                PeaksAudioPlayerAdapter.logger("pause event, currentTime:", this.htmlAudioElem.currentTime);
+                eventEmitter.emit("player.pause", this.htmlAudioElem.currentTime);
+            },
+            { signal },
+        );
 
-        this.htmlAudioElem.addEventListener("playing", () => {
-            PeaksAudioPlayerAdapter.logger("playing event, currentTime:", this.htmlAudioElem.currentTime);
-            eventEmitter.emit("player.playing", this.htmlAudioElem.currentTime);
-        });
+        this.htmlAudioElem.addEventListener(
+            "playing",
+            () => {
+                PeaksAudioPlayerAdapter.logger("playing event, currentTime:", this.htmlAudioElem.currentTime);
+                eventEmitter.emit("player.playing", this.htmlAudioElem.currentTime);
+            },
+            { signal },
+        );
 
-        this.htmlAudioElem.addEventListener("seeked", () => {
-            PeaksAudioPlayerAdapter.logger("seeked event, currentTime:", this.htmlAudioElem.currentTime);
-            eventEmitter.emit("player.seeked", this.htmlAudioElem.currentTime);
-        });
+        this.htmlAudioElem.addEventListener(
+            "seeked",
+            () => {
+                PeaksAudioPlayerAdapter.logger("seeked event, currentTime:", this.htmlAudioElem.currentTime);
+                eventEmitter.emit("player.seeked", this.htmlAudioElem.currentTime);
+            },
+            { signal },
+        );
 
-        this.htmlAudioElem.addEventListener("timeupdate", () => {
-            PeaksAudioPlayerAdapter.logger("timeupdate event, currentTime:", this.htmlAudioElem.currentTime);
-            eventEmitter.emit("player.timeupdate", this.htmlAudioElem.currentTime);
-        });
+        this.htmlAudioElem.addEventListener(
+            "timeupdate",
+            () => {
+                PeaksAudioPlayerAdapter.logger("timeupdate event, currentTime:", this.htmlAudioElem.currentTime);
+                eventEmitter.emit("player.timeupdate", this.htmlAudioElem.currentTime);
+            },
+            { signal },
+        );
 
         await loaded;
+        PeaksAudioPlayerAdapter.logger("init return");
     }
 
     destroy(): void {
         PeaksAudioPlayerAdapter.logger("destroy() called");
+    }
+
+    dispose(): void {
+        PeaksAudioPlayerAdapter.logger("dispose() called");
 
         this.htmlAudioElem.pause();
-        this.htmlAudioElem.src = "";
+        this.abortController.abort();
+        this.htmlAudioElem.removeAttribute("src");
+
         this.htmlAudioElem.load();
     }
 

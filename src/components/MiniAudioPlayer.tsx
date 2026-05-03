@@ -6,7 +6,7 @@ import { PeaksAudioPlayerAdapter } from "@/utils/audio/PeaksAudioPlayerAdapter";
 import { Download, ExternalLink, Pause, Play } from "lucide-react";
 import Peaks from "peaks.js";
 import type { PeaksInstance, PeaksOptions } from "peaks.js";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useId } from "react";
 import { Button } from "@/components/ui/button";
 import { pcmFloat32ToWAV } from "@/utils/audio/pcmFloat32ToWAV";
 
@@ -75,10 +75,16 @@ export default function MiniAudioPlayer({
 }
 
 function AudioWaveform({ audioPlayerAdapter }: { audioPlayerAdapter: PeaksAudioPlayerAdapter }) {
-    const [, setPeaksInstance] = useState<PeaksInstance | null>(null);
+    const [peaksInstance, setPeaksInstance] = useState<PeaksInstance | null>(null);
     const overviewContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
+        if (peaksInstance) {
+            return () => {
+                peaksInstance?.destroy();
+            };
+        }
+
         (async function () {
             if (!overviewContainerRef.current) {
                 return;
@@ -115,7 +121,7 @@ function AudioWaveform({ audioPlayerAdapter }: { audioPlayerAdapter: PeaksAudioP
                 setPeaksInstance(instance);
             });
         })();
-    }, [setPeaksInstance, audioPlayerAdapter]);
+    }, [peaksInstance, setPeaksInstance, audioPlayerAdapter]);
 
     return <div ref={overviewContainerRef} className="peaks_overview_container h-16 w-72"></div>;
 }
