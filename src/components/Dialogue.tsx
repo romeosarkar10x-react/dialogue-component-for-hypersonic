@@ -14,8 +14,6 @@ import {
 } from "lucide-react";
 import { useEffect, useReducer, useRef, useState, type ChangeEvent } from "react";
 import { Button } from "./ui/button";
-import Badge from "./Badge";
-import Divider from "./Divider";
 import MiniAudioPlayer, { type AudioPlayerAdapterResourceStateType } from "./MiniAudioPlayer";
 import { produce } from "immer";
 import { PeaksAudioPlayerAdapter } from "@/utils/audio/PeaksAudioPlayerAdapter";
@@ -347,11 +345,17 @@ export default function Dialogue({
                     <Button onClick={startEditing} variant="ghost" size="sm" title="Edit">
                         <Pencil size={14} /> Edit
                     </Button>
-                    <Button onClick={handleEnhance} disabled={enhancing} variant="ghost" size="sm" title="Enhance with AI">
+                    <Button
+                        onClick={handleEnhance}
+                        disabled={enhancing}
+                        variant="ghost"
+                        size="sm"
+                        title="Enhance with AI"
+                    >
                         {enhancing ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} Enhance
                     </Button>
 
-                    <Divider />
+                    <RxDividerVertical />
 
                     <span className="text-[10px] text-muted-foreground mr-1 select-none">Variants</span>
                     <div className="flex gap-px border border-border rounded-lg p-px">
@@ -377,14 +381,19 @@ export default function Dialogue({
                         </Button>
 
                         <div className="relative" ref={dropdownRef}>
-                            <Button onClick={() => setDropdownOpen((v) => !v)} variant="ghost" size="icon-sm" title="More">
+                            <Button
+                                onClick={() => setDropdownOpen((v) => !v)}
+                                variant="ghost"
+                                size="icon-sm"
+                                title="More"
+                            >
                                 <MoreVertical size={16} />
                             </Button>
                             {dropdownOpen && (
                                 <div className="absolute right-0 bottom-full mb-1.5 w-40 bg-card border border-border rounded-xl shadow-xl shadow-black/50 py-1 z-50">
                                     <button
                                         disabled={isFirst}
-                                         onClick={() => setDropdownOpen(false)}
+                                        onClick={() => setDropdownOpen(false)}
                                         className="flex items-center gap-2.5 w-full px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-accent transition-colors disabled:opacity-30 disabled:pointer-events-none"
                                     >
                                         <ArrowUp size={14} /> Move Up
