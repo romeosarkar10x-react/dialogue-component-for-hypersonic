@@ -129,8 +129,7 @@ export default function Dialogue({
                 }),
             );
 
-            // const url = `https://samplelib.com/lib/preview/mp3/sample-${values[randomIndex]}s.mp3`;
-            const url = `https://upload.wikimedia.org/wikipedia/commons/a/a9/Tromboon-sample.ogg`;
+            const url = `./music/Warriyo_Laura_Brehm_Mortals_(feat_Laura_Brehm)_[NCS_Release].mp3`;
             let response: Response;
 
             try {
